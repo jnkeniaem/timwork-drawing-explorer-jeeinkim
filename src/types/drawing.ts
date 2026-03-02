@@ -50,3 +50,11 @@ export interface Drawing {
   position: Position | null;
   disciplines?: Record<string, Discipline>;
 }
+
+export interface DrawingContext {
+  id: string;
+  version: string;
+  drawingName: string;
+  disciplineName: string;
+  regionName?: string;
+}
