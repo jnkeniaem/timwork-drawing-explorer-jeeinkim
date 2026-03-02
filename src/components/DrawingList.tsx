@@ -2,6 +2,7 @@ import { useState } from 'react';
 import metadata from '../assets/metadata.json';
 import type { Drawing, DrawingContext } from '../types/drawing';
 import { getAllRevisions } from '../utils/drawingUtils';
+import DrawingViewer from './DrawingViewer';
 
 const DrawingList = () => {
   const drawings: Drawing[] = Object.values(metadata.drawings);
@@ -17,7 +18,7 @@ const DrawingList = () => {
           </li>
         ))}
       </ul>
-      {selected && <img src={`/drawings/${selected.image}`} />}
+      <DrawingViewer selected={selected} onClose={() => setSelected(null)} />
     </>
   );
 };

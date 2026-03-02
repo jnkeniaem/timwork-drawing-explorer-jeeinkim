@@ -1,0 +1,39 @@
+.drawing-viewer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.drawing-info {
+  gap: 12px;
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-evenly;
+  justify-content: space-around;
+}
+
+.drawing-info p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.drawing-info strong {
+  color: #333;
+  font-weight: 600;
+}
+
+.drawing-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+.drawing-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
