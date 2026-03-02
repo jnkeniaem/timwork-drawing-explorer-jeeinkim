@@ -15,6 +15,8 @@ export const getAllRevisions = (drawings: Drawing[]): DrawingContext[] => {
         items.push({
           id: `${d.id}-${disciplineName}-${r.version}`,
           version: r.version,
+          image: r.image,
+          date: r.date,
           ...context,
         }),
       );
@@ -26,6 +28,8 @@ export const getAllRevisions = (drawings: Drawing[]): DrawingContext[] => {
               id: `${d.id}-${disciplineName}-${r.version}`,
               version: r.version,
               regionName,
+              image: r.image,
+              date: r.date,
               ...context,
             }),
           );
