@@ -1,55 +1,52 @@
-export interface IPolygonTransform {
+export interface Transform {
+  relativeTo?: string;
   x: number;
   y: number;
   scale: number;
   rotation: number;
 }
 
-export interface IImageTransform extends IPolygonTransform {
-  relativeTo: string;
+export type Vertex = number[];
+
+export interface Polygon {
+  vertices: Vertex[];
+  polygonTransform: Transform;
 }
 
-export type Verticle = [number, number];
-
-export interface IPolygon {
-  vertices: Verticle[];
-  polygonTransform: IPolygonTransform;
-}
-
-export interface IRevision {
+export interface Revision {
   version: string;
   image: string;
   date: string; // "YYYY-MM-DD"
   //   TODO: date?
   description: string;
   changes: string[];
-  imageTransform: IImageTransform;
-  polygon?: IPolygon;
+  imageTransform?: Transform;
+  polygon?: Polygon;
 }
 
-export interface IPosition {
-  vertices: Verticle[];
-  imageTransform: IImageTransform;
+export interface Position {
+  vertices: Vertex[];
+  imageTransform: Transform;
 }
 
-export interface IRegion {
-  polygon: IPolygon;
-  revisions: IRevision[];
+export interface Region {
+  polygon: Polygon;
+  revisions: Revision[];
 }
 
-export interface IDiscipline {
-  imageTransform?: IImageTransform;
+export interface Discipline {
+  imageTransform?: Transform;
   image?: string;
-  polygon?: IPolygon;
-  regions?: Record<string, IRegion>; // ex) "Region A": { ... }
-  revisions: IRevision[];
+  polygon?: Polygon;
+  regions?: Record<string, Region>; // ex) "Region A": { ... }
+  revisions?: Revision[];
 }
 
 export interface Drawing {
   id: string;
   name: string;
   image: string;
-  parent: string;
-  position: IPosition;
-  disciplines: Record<string, IDiscipline>;
+  parent: string | null;
+  position: Position | null;
+  disciplines?: Record<string, Discipline>;
 }
