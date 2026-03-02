@@ -6,6 +6,7 @@ interface RevisionItem {
   version: string;
   drawingName: string;
   disciplineName: string;
+  regionName?: string;
 }
 
 const DrawingList = () => {
@@ -16,8 +17,8 @@ const DrawingList = () => {
   drawings.forEach((d) => {
     const disciplines = d.disciplines ?? [];
 
-    return Object.entries(disciplines).forEach(([disciplineName, data]) => {
-      const revisions = data.revisions ?? [];
+    Object.entries(disciplines).forEach(([disciplineName, discipline]) => {
+      const revisions = discipline.revisions ?? [];
 
       revisions.forEach((r) =>
         revisionItems.push({
@@ -27,6 +28,21 @@ const DrawingList = () => {
           disciplineName,
         }),
       );
+
+      const regions = discipline.regions ?? {};
+      Object.entries(regions).forEach(([regionName, region]) => {
+        const regionRevisions = region.revisions ?? [];
+
+        regionRevisions.forEach((r) =>
+          revisionItems.push({
+            id: `${d.id}-${disciplineName}-${r.version}`,
+            version: r.version,
+            drawingName: d.name,
+            disciplineName,
+            regionName,
+          }),
+        );
+      });
     });
   });
 
