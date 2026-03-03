@@ -1,6 +1,6 @@
 import type { DrawingContext } from '../types/drawing';
 import Modal from './Modal';
-import '../styles/DrawingViewer.css';
+import styled from 'styled-components';
 
 interface DrawingViewerProps {
   selected: DrawingContext | null;
@@ -12,8 +12,8 @@ const DrawingViewer = ({ selected, onClose }: DrawingViewerProps) => {
 
   return (
     <Modal isOpen={!!selected} onClose={onClose} title={selected.drawingName}>
-      <div className="drawing-viewer">
-        <div className="drawing-info">
+      <WrapperStyled>
+        <DrawingInfoWrapperStyled>
           <p>
             <strong>공종:</strong> {selected.disciplineName}
           </p>
@@ -28,13 +28,56 @@ const DrawingViewer = ({ selected, onClose }: DrawingViewerProps) => {
           <p>
             <strong>발행일:</strong> {selected.date}
           </p>
-        </div>
-        <div className="drawing-image-container">
-          <img src={`/drawings/${selected.image}`} className="drawing-image" />
-        </div>
-      </div>
+        </DrawingInfoWrapperStyled>
+        <ImgWrapperStyled>
+          <ImgStyled
+            src={`/drawings/${selected.image}`}
+            className="drawing-image"
+          />
+        </ImgWrapperStyled>
+      </WrapperStyled>
     </Modal>
   );
 };
+
+const WrapperStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+const DrawingInfoWrapperStyled = styled.div`
+  gap: 12px;
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-evenly;
+  justify-content: space-around;
+
+  & > p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  & > strong {
+    color: #333;
+    font-weight: 600;
+  }
+`;
+
+const ImgWrapperStyled = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+`;
+
+const ImgStyled = styled.img`
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+`;
 
 export default DrawingViewer;

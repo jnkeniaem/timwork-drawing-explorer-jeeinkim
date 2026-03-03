@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import '../styles/Modal.css';
+import styled from 'styled-components';
 
 interface ModalProps {
   isOpen: boolean;
@@ -28,18 +28,69 @@ const Modal = ({ isOpen, onClose, children, title }: ModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-container" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header">
-          {title && <h3 className="modal-title">{title}</h3>}
-          <button className="modal-close" onClick={onClose}>
+    <ModalOverlayStyled onClick={onClose}>
+      <ModalWrapperStyled onClick={(e) => e.stopPropagation()}>
+        <HeaderStyled>
+          {title && <TitleStyled className="modal-title">{title}</TitleStyled>}
+          <CloseButtonStyled className="modal-close" onClick={onClose}>
             ✕
-          </button>
-        </div>
-        <div className="modal-content">{children}</div>
-      </div>
-    </div>
+          </CloseButtonStyled>
+        </HeaderStyled>
+        <div>{children}</div>
+      </ModalWrapperStyled>
+    </ModalOverlayStyled>
   );
 };
+
+const ModalOverlayStyled = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+`;
+
+const ModalWrapperStyled = styled.div`
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  max-width: 90vw;
+  max-height: 90vh;
+  padding: 24px;
+  overflow: auto;
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const HeaderStyled = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const CloseButtonStyled = styled.button`
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #777;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const TitleStyled = styled.h3`
+  margin: 0;
+  font-weight: 600;
+`;
 
 export default Modal;
