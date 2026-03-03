@@ -1,34 +1,49 @@
 import type { DrawingContext } from '../types/drawing';
 import Modal from './Modal';
 import styled from 'styled-components';
+import { Badge } from './ui/badge';
 
-interface DrawingViewerProps {
+const DrawingViewer = ({
+  selected,
+  onClose,
+}: {
   selected: DrawingContext | null;
   onClose: () => void;
-}
-
-const DrawingViewer = ({ selected, onClose }: DrawingViewerProps) => {
+}) => {
   if (!selected) return null;
 
   return (
     <Modal isOpen={!!selected} onClose={onClose} title={selected.drawingName}>
       <WrapperStyled>
-        <DrawingInfoWrapperStyled>
-          <p>
-            <strong>공종:</strong> {selected.disciplineName}
-          </p>
-          <p>
-            <strong>버전:</strong> {selected.version}
-          </p>
-          {selected.regionName && (
-            <p>
-              <strong>영역:</strong> {selected.regionName}
-            </p>
-          )}
-          <p>
-            <strong>발행일:</strong> {selected.date}
-          </p>
-        </DrawingInfoWrapperStyled>
+        <ContextGroupStyled>
+          <ContextStyled>
+            <span>{selected.version}</span>
+            <span>·</span>
+            <span>{selected.disciplineName}</span>
+            <span>·</span>
+            <span>{selected.date}</span>
+            <span>·</span>
+            {selected.regionName && (
+              <>
+                <span>{selected.regionName}</span>
+                <span>·</span>
+              </>
+            )}
+            <span>{selected.description}</span>
+          </ContextStyled>
+          {selected.changes.length ? (
+            <>
+              <span className="text-gray-300">|</span>
+              <ContextStyled>
+                {selected.changes.map((change) => (
+                  <Badge key={change} variant="outline">
+                    {change}
+                  </Badge>
+                ))}
+              </ContextStyled>
+            </>
+          ) : null}
+        </ContextGroupStyled>
         <ImgWrapperStyled>
           <ImgStyled src={`/drawings/${selected.image}`} />
         </ImgWrapperStyled>
@@ -43,24 +58,21 @@ const WrapperStyled = styled.div`
   gap: 20px;
 `;
 
-const DrawingInfoWrapperStyled = styled.div`
+const ContextGroupStyled = styled.div`
   gap: 12px;
-  padding: 16px;
-  background-color: #f5f5f5;
-  border-radius: 6px;
   display: flex;
-  justify-content: space-evenly;
-  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+`;
 
-  & > p {
+const ContextStyled = styled.div`
+  display: flex;
+  gap: 6px;
+
+  & > span {
     margin: 0;
     font-size: 0.9rem;
     color: #666;
-  }
-
-  & > strong {
-    color: #333;
-    font-weight: 600;
   }
 `;
 

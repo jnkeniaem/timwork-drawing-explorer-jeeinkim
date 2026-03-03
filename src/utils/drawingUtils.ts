@@ -38,6 +38,7 @@ export const getAllRevisions = (drawings: Drawing[]): DrawingContext[] => {
           image: r.image,
           date: r.date,
           description: r.description,
+          changes: r.changes,
           ...context,
         }),
       );
@@ -57,6 +58,7 @@ export const getAllRevisions = (drawings: Drawing[]): DrawingContext[] => {
               image: r.image,
               date: r.date,
               description: r.description,
+              changes: r.changes,
               ...context,
             }),
           );

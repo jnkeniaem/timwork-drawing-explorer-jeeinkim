@@ -60,4 +60,5 @@ export interface DrawingContext {
   image: string;
   date: string;
   description: string;
+  changes: string[];
 }

@@ -75,9 +75,10 @@ const HeaderStyled = styled.div`
   justify-content: space-between;
 `;
 
-const TitleStyled = styled.h3`
+const TitleStyled = styled.span`
   margin: 0;
   font-weight: 600;
+  font-size: 1.2rem;
 `;
 
 export default Modal;

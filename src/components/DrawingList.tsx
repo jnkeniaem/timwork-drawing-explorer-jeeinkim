@@ -28,7 +28,7 @@ const WrapperStyled = styled.main`
   padding: 100px 70px;
 `;
 
-const HeaderStyled = styled.h1`
+const HeaderStyled = styled.span`
   font-size: 2rem;
   font-weight: 700;
 `;
