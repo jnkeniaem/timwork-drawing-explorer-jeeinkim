@@ -6,26 +6,20 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import type { Drawing, DrawingContext } from '@/types/drawing';
-import { getAllRevisions, getLatestRevisionIds } from '@/utils/drawingUtils';
-import metadata from '../assets/metadata.json';
-import { Badge } from '@/components/ui/badge';
-
-const BADGE_STYLES = {
-  latest: 'bg-red-50 text-red-700',
-  old: 'bg-gray-50 text-gray-700',
-};
+import type { DrawingContext } from '@/types/drawing';
+import RevisionStatusBadge from './RevisionStatusBadge';
 
 const DrawingTable = ({
   latestOnly,
+  revisionItems,
+  latestRevisionIds,
   onRowClick,
 }: {
   latestOnly: boolean;
+  revisionItems: DrawingContext[];
+  latestRevisionIds: Set<string>;
   onRowClick: React.Dispatch<React.SetStateAction<DrawingContext | null>>;
 }) => {
-  const drawings: Drawing[] = Object.values(metadata.drawings);
-  const revisionItems = getAllRevisions(drawings);
-  const latestRevisionIds = getLatestRevisionIds(revisionItems);
   const displayItems = latestOnly
     ? revisionItems.filter((item) => latestRevisionIds.has(item.id))
     : revisionItems;
@@ -55,9 +49,7 @@ const DrawingTable = ({
                 {elem.drawingName}
               </TableCell>
               <TableCell className="text-center">
-                <Badge className={BADGE_STYLES[versionType]}>
-                  {versionType}
-                </Badge>
+                <RevisionStatusBadge status={versionType} />
               </TableCell>
               <TableCell className="text-center">{elem.version}</TableCell>
               <TableCell className="text-center">

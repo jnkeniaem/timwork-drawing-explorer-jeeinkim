@@ -1,15 +1,16 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import { Button } from './ui/button';
+import RevisionStatusBadge from './RevisionStatusBadge';
 
 interface ModalProps {
-  isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
   title: string;
+  latest: boolean;
 }
 
-const Modal = ({ isOpen, onClose, children, title }: ModalProps) => {
+const Modal = ({ onClose, children, title, latest }: ModalProps) => {
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -17,22 +18,21 @@ const Modal = ({ isOpen, onClose, children, title }: ModalProps) => {
       }
     };
 
-    if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
-    }
+    document.addEventListener('keydown', handleEscape);
 
     return () => {
       document.removeEventListener('keydown', handleEscape);
     };
-  }, [isOpen]);
-
-  if (!isOpen) return null;
+  }, []);
 
   return (
     <ModalOverlayStyled onClick={onClose}>
       <ModalWrapperStyled onClick={(e) => e.stopPropagation()}>
         <HeaderStyled>
-          {title && <TitleStyled>{title}</TitleStyled>}
+          <TitleWithBadgeWrapper>
+            {title && <TitleStyled>{title}</TitleStyled>}
+            {latest && <RevisionStatusBadge status="latest" />}
+          </TitleWithBadgeWrapper>
           <Button onClick={onClose} variant="ghost">
             ✕
           </Button>
@@ -79,6 +79,11 @@ const TitleStyled = styled.span`
   margin: 0;
   font-weight: 600;
   font-size: 1.2rem;
+`;
+
+const TitleWithBadgeWrapper = styled.div`
+  display: flex;
+  gap: 8px;
 `;
 
 export default Modal;

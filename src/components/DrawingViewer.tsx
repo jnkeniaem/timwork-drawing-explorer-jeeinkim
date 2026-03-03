@@ -5,15 +5,15 @@ import { Badge } from './ui/badge';
 
 const DrawingViewer = ({
   selected,
+  latest,
   onClose,
 }: {
-  selected: DrawingContext | null;
+  selected: DrawingContext;
+  latest: boolean;
   onClose: () => void;
 }) => {
-  if (!selected) return null;
-
   return (
-    <Modal isOpen={!!selected} onClose={onClose} title={selected.drawingName}>
+    <Modal onClose={onClose} title={selected.drawingName} latest={latest}>
       <WrapperStyled>
         <ContextGroupStyled>
           <ContextStyled>
