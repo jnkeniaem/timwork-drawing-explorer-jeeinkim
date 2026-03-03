@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import type { Drawing } from '@/types/drawing';
+import type { Drawing, DrawingContext } from '@/types/drawing';
 import { getAllRevisions, getLatestRevisionIds } from '@/utils/drawingUtils';
 import metadata from '../assets/metadata.json';
 import { Badge } from '@/components/ui/badge';
@@ -16,7 +16,13 @@ const BADGE_STYLES = {
   old: 'bg-gray-50 text-gray-700',
 };
 
-const DrawingTable = ({ latestOnly }: { latestOnly: boolean }) => {
+const DrawingTable = ({
+  latestOnly,
+  onRowClick,
+}: {
+  latestOnly: boolean;
+  onRowClick: React.Dispatch<React.SetStateAction<DrawingContext | null>>;
+}) => {
   const drawings: Drawing[] = Object.values(metadata.drawings);
   const revisionItems = getAllRevisions(drawings);
   const latestRevisionIds = getLatestRevisionIds(revisionItems);
@@ -44,7 +50,7 @@ const DrawingTable = ({ latestOnly }: { latestOnly: boolean }) => {
           const versionType = latestRevisionIds.has(elem.id) ? 'latest' : 'old';
 
           return (
-            <TableRow key={elem.id}>
+            <TableRow key={elem.id} onClick={() => onRowClick(elem)}>
               <TableCell className="text-center font-medium">
                 {elem.drawingName}
               </TableCell>

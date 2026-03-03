@@ -13,7 +13,7 @@ const DrawingList = () => {
     <WrapperStyled>
       <HeaderStyled>도면 관리</HeaderStyled>
       <LatestOnlySwitch checked={latestOnly} onCheckedChange={setLatestOnly} />
-      <DrawingTable latestOnly={latestOnly} />
+      <DrawingTable latestOnly={latestOnly} onRowClick={setSelected} />
       <DrawingViewer selected={selected} onClose={() => setSelected(null)} />
     </WrapperStyled>
   );
