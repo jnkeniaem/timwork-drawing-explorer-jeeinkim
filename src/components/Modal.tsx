@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
+import { Button } from './ui/button';
 
 interface ModalProps {
   isOpen: boolean;
@@ -31,10 +32,10 @@ const Modal = ({ isOpen, onClose, children, title }: ModalProps) => {
     <ModalOverlayStyled onClick={onClose}>
       <ModalWrapperStyled onClick={(e) => e.stopPropagation()}>
         <HeaderStyled>
-          {title && <TitleStyled className="modal-title">{title}</TitleStyled>}
-          <CloseButtonStyled className="modal-close" onClick={onClose}>
+          {title && <TitleStyled>{title}</TitleStyled>}
+          <Button onClick={onClose} variant="ghost">
             ✕
-          </CloseButtonStyled>
+          </Button>
         </HeaderStyled>
         <div>{children}</div>
       </ModalWrapperStyled>
@@ -72,20 +73,6 @@ const HeaderStyled = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`;
-
-const CloseButtonStyled = styled.button`
-  background: none;
-  border: none;
-  font-size: 24px;
-  color: #777;
-  cursor: pointer;
-  padding: 0;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 const TitleStyled = styled.h3`
