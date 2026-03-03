@@ -59,4 +59,5 @@ export interface DrawingContext {
   regionName?: string;
   image: string;
   date: string;
+  description: string;
 }

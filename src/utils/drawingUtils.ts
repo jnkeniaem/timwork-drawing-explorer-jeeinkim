@@ -1,5 +1,21 @@
 import type { Drawing, DrawingContext } from '../types/drawing';
 
+const buildRevisionId = ({
+  drawingId,
+  disciplineName,
+  version,
+  regionName,
+}: {
+  drawingId: string;
+  disciplineName: string;
+  version: string;
+  regionName?: string;
+}) => {
+  return [drawingId, disciplineName, regionName, version]
+    .filter(Boolean)
+    .join('-');
+};
+
 export const getAllRevisions = (drawings: Drawing[]): DrawingContext[] => {
   const items: DrawingContext[] = [];
 
@@ -13,10 +29,15 @@ export const getAllRevisions = (drawings: Drawing[]): DrawingContext[] => {
 
       (discipline.revisions || []).forEach((r) =>
         items.push({
-          id: `${d.id}-${disciplineName}-${r.version}`,
+          id: buildRevisionId({
+            drawingId: d.id,
+            disciplineName,
+            version: r.version,
+          }),
           version: r.version,
           image: r.image,
           date: r.date,
+          description: r.description,
           ...context,
         }),
       );
@@ -25,11 +46,17 @@ export const getAllRevisions = (drawings: Drawing[]): DrawingContext[] => {
         ([regionName, region]) => {
           (region.revisions || []).forEach((r) =>
             items.push({
-              id: `${d.id}-${disciplineName}-${r.version}`,
+              id: buildRevisionId({
+                drawingId: d.id,
+                disciplineName,
+                version: r.version,
+                regionName,
+              }),
               version: r.version,
               regionName,
               image: r.image,
               date: r.date,
+              description: r.description,
               ...context,
             }),
           );
@@ -39,4 +66,24 @@ export const getAllRevisions = (drawings: Drawing[]): DrawingContext[] => {
   });
 
   return items;
+};
+
+export const getLatestRevisionIds = (
+  revisionItems: DrawingContext[],
+): Set<string> => {
+  const latestMap = new Map<string, DrawingContext>();
+
+  revisionItems.forEach((item) => {
+    const key = [item.drawingName, item.disciplineName, item.regionName]
+      .filter(Boolean)
+      .join('-');
+    const existing = latestMap.get(key);
+
+    // 날짜로 비교
+    if (!existing || item.date > existing.date) {
+      latestMap.set(key, item);
+    }
+  });
+
+  return new Set(Array.from(latestMap.values()).map((item) => item.id));
 };

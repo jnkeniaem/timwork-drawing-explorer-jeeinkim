@@ -7,11 +7,13 @@ import LatestOnlySwitch from './LatestOnlySwitch';
 
 const DrawingList = () => {
   const [selected, setSelected] = useState<DrawingContext | null>(null);
+  const [latestOnly, setLatestOnly] = useState(false);
+
   return (
     <WrapperStyled>
       <HeaderStyled>도면 관리</HeaderStyled>
-      <LatestOnlySwitch />
-      <DrawingTable />
+      <LatestOnlySwitch checked={latestOnly} onCheckedChange={setLatestOnly} />
+      <DrawingTable latestOnly={latestOnly} />
       <DrawingViewer selected={selected} onClose={() => setSelected(null)} />
     </WrapperStyled>
   );
