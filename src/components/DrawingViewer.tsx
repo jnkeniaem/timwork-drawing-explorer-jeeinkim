@@ -30,10 +30,7 @@ const DrawingViewer = ({ selected, onClose }: DrawingViewerProps) => {
           </p>
         </DrawingInfoWrapperStyled>
         <ImgWrapperStyled>
-          <ImgStyled
-            src={`/drawings/${selected.image}`}
-            className="drawing-image"
-          />
+          <ImgStyled src={`/drawings/${selected.image}`} />
         </ImgWrapperStyled>
       </WrapperStyled>
     </Modal>
