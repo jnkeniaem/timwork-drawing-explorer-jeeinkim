@@ -17,17 +17,17 @@ const DrawingTable = ({ latestOnly }: { latestOnly: boolean }) => {
     : revisionItems;
 
   return (
-    <Table>
+    <Table className="table-fixed">
       <TableHeader>
         <TableRow>
-          <TableHead className="text-gray-500 text-center w-[100px]">
+          <TableHead className="text-gray-500 text-center w-[200px] ">
             이름
           </TableHead>
+          <TableHead className="text-gray-500 text-center">공종</TableHead>
+          <TableHead className="text-gray-500 text-center">영역</TableHead>
           <TableHead className="text-gray-500 text-center">상태</TableHead>
           <TableHead className="text-gray-500 text-center">버전</TableHead>
-          <TableHead className="text-gray-500 text-center">공종</TableHead>
           <TableHead className="text-gray-500 text-center">날짜</TableHead>
-          <TableHead className="text-gray-500 text-center">영역</TableHead>
           <TableHead className="text-gray-500 text-center">설명</TableHead>
         </TableRow>
       </TableHeader>
@@ -41,16 +41,16 @@ const DrawingTable = ({ latestOnly }: { latestOnly: boolean }) => {
                 {elem.drawingName}
               </TableCell>
               <TableCell className="text-center">
-                <RevisionStatusBadge status={versionType} />
-              </TableCell>
-              <TableCell className="text-center">{elem.version}</TableCell>
-              <TableCell className="text-center">
                 {elem.disciplineName}
               </TableCell>
-              <TableCell className="text-center">{elem.date}</TableCell>
               <TableCell className="text-center">
                 {elem.regionName || '-'}
               </TableCell>
+              <TableCell className="text-center">
+                <RevisionStatusBadge status={versionType} />
+              </TableCell>
+              <TableCell className="text-center">{elem.version}</TableCell>
+              <TableCell className="text-center">{elem.date}</TableCell>
               <TableCell className="text-center">{elem.description}</TableCell>
             </TableRow>
           );

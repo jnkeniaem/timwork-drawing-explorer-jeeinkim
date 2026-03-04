@@ -12,6 +12,7 @@ const DrawingList = () => {
   const { selected, setRevisionItems } = useDrawingStore();
   const [latestOnly, setLatestOnly] = useState(false);
   const drawings: Drawing[] = Object.values(metadata.drawings);
+  const projectName = metadata.project.name;
 
   useEffect(() => {
     setRevisionItems(getAllRevisions(drawings));
@@ -19,26 +20,46 @@ const DrawingList = () => {
 
   return (
     <WrapperStyled>
-      <HeaderStyled>도면 관리</HeaderStyled>
-      <LatestOnlySwitch checked={latestOnly} onCheckedChange={setLatestOnly} />
-      <DrawingTable latestOnly={latestOnly} />
+      <HeaderStyled>
+        <span className="text-4xl font-bold">도면 관리</span>
+        <span className="text-gray-700 text-lg font-semibold">
+          {projectName}
+        </span>
+      </HeaderStyled>
+      <MainStyled>
+        <LatestOnlySwitch
+          checked={latestOnly}
+          onCheckedChange={setLatestOnly}
+        />
+        <DrawingTable latestOnly={latestOnly} />
+      </MainStyled>
       {selected ? <DrawingViewer selected={selected} /> : null}
     </WrapperStyled>
   );
 };
 
-const WrapperStyled = styled.main`
+const WrapperStyled = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100%;
   overflow-y: scroll;
   padding: 100px 70px;
+  gap: 48px;
 `;
 
-const HeaderStyled = styled.span`
-  font-size: 2rem;
-  font-weight: 700;
+const HeaderStyled = styled.header`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-direction: column;
+`;
+
+const MainStyled = styled.main`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 `;
 
 export default DrawingList;
