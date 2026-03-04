@@ -19,7 +19,7 @@ const VersionCard = ({
 }) => {
   return (
     <Card
-      className={`shadow-none mx-auto w-full max-w-sm ${selected ? ' border-[var(--primary)]' : ''}`}
+      className={`shadow-none mx-auto w-[240px] max-w-sm ${selected ? ' border-[var(--primary)]' : ''}`}
       onClick={() => onClick(revision)}
     >
       <CardHeader>

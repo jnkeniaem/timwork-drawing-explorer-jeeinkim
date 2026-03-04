@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import type { Drawing } from '../types/drawing';
-import DrawingViewer from './DrawingViewer';
 import styled from 'styled-components';
 import DrawingTable from './DrawingTable';
 import LatestOnlySwitch from './LatestOnlySwitch';
 import metadata from '../assets/metadata.json';
 import { getAllRevisions } from '@/utils/drawingUtils';
 import { useDrawingStore } from '@/stores/drawingStore';
+import DrawingModal from './DrawingModal';
 
 const DrawingList = () => {
   const { selected, setRevisionItems } = useDrawingStore();
@@ -33,7 +33,7 @@ const DrawingList = () => {
         />
         <DrawingTable latestOnly={latestOnly} />
       </MainStyled>
-      {selected ? <DrawingViewer selected={selected} /> : null}
+      {selected ? <DrawingModal /> : null}
     </WrapperStyled>
   );
 };
