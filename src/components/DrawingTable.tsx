@@ -6,18 +6,12 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import type { DrawingContext, RevisionStatus } from '@/types/drawing';
+import type { RevisionStatus } from '@/types/drawing';
 import RevisionStatusBadge from './RevisionStatusBadge';
-import { useSelectedRevision } from '@/stores/drawingStore';
+import { useDrawingStore } from '@/stores/drawingStore';
 
-const DrawingTable = ({
-  latestOnly,
-  revisionItems,
-}: {
-  latestOnly: boolean;
-  revisionItems: DrawingContext[];
-}) => {
-  const setSelected = useSelectedRevision((state) => state.setSelected);
+const DrawingTable = ({ latestOnly }: { latestOnly: boolean }) => {
+  const { setSelected, revisionItems } = useDrawingStore();
   const displayItems = latestOnly
     ? revisionItems.filter((item) => item.latest)
     : revisionItems;

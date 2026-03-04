@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { Drawing } from '../types/drawing';
 import DrawingViewer from './DrawingViewer';
 import styled from 'styled-components';
@@ -6,22 +6,23 @@ import DrawingTable from './DrawingTable';
 import LatestOnlySwitch from './LatestOnlySwitch';
 import metadata from '../assets/metadata.json';
 import { getAllRevisions } from '@/utils/drawingUtils';
-import { useSelectedRevision } from '@/stores/drawingStore';
+import { useDrawingStore } from '@/stores/drawingStore';
 
 const DrawingList = () => {
-  const selected = useSelectedRevision((state) => state.selected);
+  const { selected, setRevisionItems } = useDrawingStore();
   const [latestOnly, setLatestOnly] = useState(false);
   const drawings: Drawing[] = Object.values(metadata.drawings);
-  const revisionItems = getAllRevisions(drawings);
+
+  useEffect(() => {
+    setRevisionItems(getAllRevisions(drawings));
+  }, []);
 
   return (
     <WrapperStyled>
       <HeaderStyled>도면 관리</HeaderStyled>
       <LatestOnlySwitch checked={latestOnly} onCheckedChange={setLatestOnly} />
-      <DrawingTable latestOnly={latestOnly} revisionItems={revisionItems} />
-      {selected ? (
-        <DrawingViewer selected={selected} revisionItems={revisionItems} />
-      ) : null}
+      <DrawingTable latestOnly={latestOnly} />
+      {selected ? <DrawingViewer selected={selected} /> : null}
     </WrapperStyled>
   );
 };

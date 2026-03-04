@@ -3,16 +3,10 @@ import Modal from './Modal';
 import styled from 'styled-components';
 import { Badge } from './ui/badge';
 import VersionList from './VersionList';
-import { useSelectedRevision } from '@/stores/drawingStore';
+import { useDrawingStore } from '@/stores/drawingStore';
 
-const DrawingViewer = ({
-  selected,
-  revisionItems,
-}: {
-  selected: DrawingContext;
-  revisionItems: DrawingContext[];
-}) => {
-  const setSelected = useSelectedRevision((state) => state.setSelected);
+const DrawingViewer = ({ selected }: { selected: DrawingContext }) => {
+  const { setSelected, revisionItems } = useDrawingStore();
   const related =
     selected == null
       ? []
