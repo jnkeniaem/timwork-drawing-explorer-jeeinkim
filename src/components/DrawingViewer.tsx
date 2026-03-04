@@ -18,6 +18,7 @@ const DrawingViewer = ({
       onClose={onClose}
       title={selected.drawingName}
       latest={selected.latest}
+      hasMultipleVersions={related.length > 1}
     >
       <WrapperStyled>
         <ContextGroupStyled>

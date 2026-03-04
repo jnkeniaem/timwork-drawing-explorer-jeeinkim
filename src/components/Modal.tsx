@@ -8,9 +8,16 @@ interface ModalProps {
   children: React.ReactNode;
   title: string;
   latest: boolean;
+  hasMultipleVersions: boolean;
 }
 
-const Modal = ({ onClose, children, title, latest }: ModalProps) => {
+const Modal = ({
+  onClose,
+  children,
+  title,
+  latest,
+  hasMultipleVersions,
+}: ModalProps) => {
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -33,6 +40,7 @@ const Modal = ({ onClose, children, title, latest }: ModalProps) => {
             {title && <TitleStyled>{title}</TitleStyled>}
             {latest && <RevisionStatusBadge status="latest" />}
           </TitleWithBadgeWrapper>
+          {hasMultipleVersions && <Button>Overlay</Button>}
           <Button onClick={onClose} variant="ghost">
             ✕
           </Button>
@@ -60,8 +68,8 @@ const ModalWrapperStyled = styled.div`
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  max-width: 90vw;
-  max-height: 90vh;
+  width: 90vw;
+  height: 90vh;
   padding: 24px;
   overflow: auto;
   gap: 16px;
