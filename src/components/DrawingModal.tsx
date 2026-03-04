@@ -103,11 +103,10 @@ const ModalWrapperStyled = styled.div`
   width: 90vw;
   height: 90vh;
   padding: 24px;
-  overflow: auto;
   gap: 16px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  overflow: hidden;
 `;
 
 const HeaderStyled = styled.div`
@@ -134,6 +133,8 @@ const ImgWrapperStyled = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 6px;
+  flex: 1;
+  overflow: hidden;
 `;
 
 const ImgStyled = styled.img`
@@ -146,6 +147,8 @@ const ContentStyled = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 16px;
+  flex: 1;
+  overflow: hidden;
 `;
 
 export default DrawingModal;
