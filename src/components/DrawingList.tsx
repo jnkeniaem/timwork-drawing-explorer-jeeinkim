@@ -5,14 +5,13 @@ import styled from 'styled-components';
 import DrawingTable from './DrawingTable';
 import LatestOnlySwitch from './LatestOnlySwitch';
 import metadata from '../assets/metadata.json';
-import { getAllRevisions, getLatestRevisionIds } from '@/utils/drawingUtils';
+import { getAllRevisions } from '@/utils/drawingUtils';
 
 const DrawingList = () => {
   const [selected, setSelected] = useState<DrawingContext | null>(null);
   const [latestOnly, setLatestOnly] = useState(false);
   const drawings: Drawing[] = Object.values(metadata.drawings);
   const revisionItems = getAllRevisions(drawings);
-  const latestRevisionIds = getLatestRevisionIds(revisionItems);
   const selectedGroup =
     selected == null
       ? []
@@ -30,13 +29,11 @@ const DrawingList = () => {
       <DrawingTable
         latestOnly={latestOnly}
         revisionItems={revisionItems}
-        latestRevisionIds={latestRevisionIds}
         onRowClick={setSelected}
       />
       {selected ? (
         <DrawingViewer
           selected={selected}
-          latest={latestRevisionIds.has(selected.id)}
           related={selectedGroup}
           onClose={() => setSelected(null)}
         />

@@ -9,17 +9,14 @@ const VersionList = ({
   related: DrawingContext[];
   selectedId: string;
 }) => {
-  const sorted = [...related].sort((a, b) => b.date.localeCompare(a.date));
-
   return (
     <VersionListStyled>
       <VersionListTitleStyled>버전 이력</VersionListTitleStyled>
-      {sorted.map((rev, idx) => (
+      {related.map((rev) => (
         <VersionCard
           key={rev.id}
           revision={rev}
           selected={rev.id === selectedId}
-          latest={idx === 0}
         />
       ))}
     </VersionListStyled>

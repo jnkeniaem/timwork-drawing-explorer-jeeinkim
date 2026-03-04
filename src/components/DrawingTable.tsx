@@ -6,22 +6,20 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import type { DrawingContext } from '@/types/drawing';
+import type { DrawingContext, RevisionStatus } from '@/types/drawing';
 import RevisionStatusBadge from './RevisionStatusBadge';
 
 const DrawingTable = ({
   latestOnly,
   revisionItems,
-  latestRevisionIds,
   onRowClick,
 }: {
   latestOnly: boolean;
   revisionItems: DrawingContext[];
-  latestRevisionIds: Set<string>;
   onRowClick: React.Dispatch<React.SetStateAction<DrawingContext | null>>;
 }) => {
   const displayItems = latestOnly
-    ? revisionItems.filter((item) => latestRevisionIds.has(item.id))
+    ? revisionItems.filter((item) => item.latest)
     : revisionItems;
 
   return (
@@ -41,7 +39,7 @@ const DrawingTable = ({
       </TableHeader>
       <TableBody>
         {displayItems.map((elem) => {
-          const versionType = latestRevisionIds.has(elem.id) ? 'latest' : 'old';
+          const versionType: RevisionStatus = elem.latest ? 'latest' : 'old';
 
           return (
             <TableRow key={elem.id} onClick={() => onRowClick(elem)}>

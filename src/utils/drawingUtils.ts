@@ -20,13 +20,16 @@ export const getAllRevisions = (drawings: Drawing[]): DrawingContext[] => {
   const items: DrawingContext[] = [];
 
   drawings.forEach((d) => {
-    const disciplines = d.disciplines ?? {};
+    const disciplines = d.disciplines || {};
+
     Object.entries(disciplines).forEach(([disciplineName, discipline]) => {
       const context = {
         drawingName: d.name,
         disciplineName,
+        latest: false,
       };
 
+      // 도면-공종 레벨
       (discipline.revisions || []).forEach((r) =>
         items.push({
           id: buildRevisionId({
@@ -43,6 +46,7 @@ export const getAllRevisions = (drawings: Drawing[]): DrawingContext[] => {
         }),
       );
 
+      // 도면-공종-영역 레벨
       Object.entries(discipline.regions || {}).forEach(
         ([regionName, region]) => {
           (region.revisions || []).forEach((r) =>
@@ -65,6 +69,12 @@ export const getAllRevisions = (drawings: Drawing[]): DrawingContext[] => {
         },
       );
     });
+  });
+
+  const latestRevisionIds = getLatestRevisionIds(items);
+
+  items.forEach((item) => {
+    item.latest = latestRevisionIds.has(item.id);
   });
 
   return items;

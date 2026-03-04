@@ -11,11 +11,9 @@ import RevisionStatusBadge from './RevisionStatusBadge';
 const VersionCard = ({
   revision,
   selected,
-  latest,
 }: {
   revision: DrawingContext;
   selected: boolean;
-  latest: boolean;
 }) => {
   return (
     <Card
@@ -24,7 +22,7 @@ const VersionCard = ({
       <CardHeader>
         <div className="flex items-center gap-2">
           <CardTitle>{revision.version}</CardTitle>
-          {latest && <RevisionStatusBadge status="latest" />}
+          {revision.latest && <RevisionStatusBadge status="latest" />}
         </div>
         <DescriptionWrapperStyled>
           <CardDescription>{revision.date}</CardDescription>

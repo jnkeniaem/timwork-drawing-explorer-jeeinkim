@@ -61,6 +61,7 @@ export interface DrawingContext {
   date: string;
   description: string;
   changes: string[];
+  latest: boolean;
 }
 
 export type RevisionStatus = 'latest' | 'old';

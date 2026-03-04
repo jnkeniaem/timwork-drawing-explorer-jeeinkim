@@ -6,17 +6,19 @@ import VersionList from './VersionList';
 
 const DrawingViewer = ({
   selected,
-  latest,
   related,
   onClose,
 }: {
   selected: DrawingContext;
-  latest: boolean;
   related: DrawingContext[];
   onClose: () => void;
 }) => {
   return (
-    <Modal onClose={onClose} title={selected.drawingName} latest={latest}>
+    <Modal
+      onClose={onClose}
+      title={selected.drawingName}
+      latest={selected.latest}
+    >
       <WrapperStyled>
         <ContextGroupStyled>
           <ContextStyled>
