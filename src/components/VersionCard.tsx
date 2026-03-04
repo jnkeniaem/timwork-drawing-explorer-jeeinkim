@@ -11,13 +11,16 @@ import RevisionStatusBadge from './RevisionStatusBadge';
 const VersionCard = ({
   revision,
   selected,
+  onClick,
 }: {
   revision: DrawingContext;
   selected: boolean;
+  onClick: (selected: DrawingContext | null) => void;
 }) => {
   return (
     <Card
       className={`shadow-none mx-auto w-full max-w-sm ${selected ? ' border-[var(--primary)]' : ''}`}
+      onClick={() => onClick(revision)}
     >
       <CardHeader>
         <div className="flex items-center gap-2">

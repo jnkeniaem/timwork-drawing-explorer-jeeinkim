@@ -5,9 +5,11 @@ import VersionCard from './VersionCard';
 const VersionList = ({
   related,
   selectedId,
+  onSelect,
 }: {
   related: DrawingContext[];
   selectedId: string;
+  onSelect: (selected: DrawingContext | null) => void;
 }) => {
   return (
     <VersionListStyled>
@@ -17,6 +19,7 @@ const VersionList = ({
           key={rev.id}
           revision={rev}
           selected={rev.id === selectedId}
+          onClick={onSelect}
         />
       ))}
     </VersionListStyled>

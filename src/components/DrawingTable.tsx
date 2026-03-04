@@ -8,16 +8,16 @@ import {
 } from '@/components/ui/table';
 import type { DrawingContext, RevisionStatus } from '@/types/drawing';
 import RevisionStatusBadge from './RevisionStatusBadge';
+import { useSelectedRevision } from '@/stores/drawingStore';
 
 const DrawingTable = ({
   latestOnly,
   revisionItems,
-  onRowClick,
 }: {
   latestOnly: boolean;
   revisionItems: DrawingContext[];
-  onRowClick: React.Dispatch<React.SetStateAction<DrawingContext | null>>;
 }) => {
+  const setSelected = useSelectedRevision((state) => state.setSelected);
   const displayItems = latestOnly
     ? revisionItems.filter((item) => item.latest)
     : revisionItems;
@@ -42,7 +42,7 @@ const DrawingTable = ({
           const versionType: RevisionStatus = elem.latest ? 'latest' : 'old';
 
           return (
-            <TableRow key={elem.id} onClick={() => onRowClick(elem)}>
+            <TableRow key={elem.id} onClick={() => setSelected(elem)}>
               <TableCell className="text-center font-medium">
                 {elem.drawingName}
               </TableCell>

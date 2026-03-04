@@ -1,42 +1,26 @@
 import { useState } from 'react';
-import type { Drawing, DrawingContext } from '../types/drawing';
+import type { Drawing } from '../types/drawing';
 import DrawingViewer from './DrawingViewer';
 import styled from 'styled-components';
 import DrawingTable from './DrawingTable';
 import LatestOnlySwitch from './LatestOnlySwitch';
 import metadata from '../assets/metadata.json';
 import { getAllRevisions } from '@/utils/drawingUtils';
+import { useSelectedRevision } from '@/stores/drawingStore';
 
 const DrawingList = () => {
-  const [selected, setSelected] = useState<DrawingContext | null>(null);
+  const selected = useSelectedRevision((state) => state.selected);
   const [latestOnly, setLatestOnly] = useState(false);
   const drawings: Drawing[] = Object.values(metadata.drawings);
   const revisionItems = getAllRevisions(drawings);
-  const selectedGroup =
-    selected == null
-      ? []
-      : revisionItems.filter(
-          (item) =>
-            item.drawingName === selected.drawingName &&
-            item.disciplineName === selected.disciplineName &&
-            item.regionName === selected.regionName,
-        );
 
   return (
     <WrapperStyled>
       <HeaderStyled>도면 관리</HeaderStyled>
       <LatestOnlySwitch checked={latestOnly} onCheckedChange={setLatestOnly} />
-      <DrawingTable
-        latestOnly={latestOnly}
-        revisionItems={revisionItems}
-        onRowClick={setSelected}
-      />
+      <DrawingTable latestOnly={latestOnly} revisionItems={revisionItems} />
       {selected ? (
-        <DrawingViewer
-          selected={selected}
-          related={selectedGroup}
-          onClose={() => setSelected(null)}
-        />
+        <DrawingViewer selected={selected} revisionItems={revisionItems} />
       ) : null}
     </WrapperStyled>
   );

@@ -3,19 +3,29 @@ import Modal from './Modal';
 import styled from 'styled-components';
 import { Badge } from './ui/badge';
 import VersionList from './VersionList';
+import { useSelectedRevision } from '@/stores/drawingStore';
 
 const DrawingViewer = ({
   selected,
-  related,
-  onClose,
+  revisionItems,
 }: {
   selected: DrawingContext;
-  related: DrawingContext[];
-  onClose: () => void;
+  revisionItems: DrawingContext[];
 }) => {
+  const setSelected = useSelectedRevision((state) => state.setSelected);
+  const related =
+    selected == null
+      ? []
+      : revisionItems.filter(
+          (item) =>
+            item.drawingName === selected.drawingName &&
+            item.disciplineName === selected.disciplineName &&
+            item.regionName === selected.regionName,
+        );
+
   return (
     <Modal
-      onClose={onClose}
+      onClose={() => setSelected(null)}
       title={selected.drawingName}
       latest={selected.latest}
       hasMultipleVersions={related.length > 1}
@@ -51,7 +61,11 @@ const DrawingViewer = ({
           ) : null}
         </ContextGroupStyled>
         {related.length > 1 ? (
-          <VersionList related={related} selectedId={selected.id} />
+          <VersionList
+            related={related}
+            selectedId={selected.id}
+            onSelect={setSelected}
+          />
         ) : null}
         <ImgWrapperStyled>
           <ImgStyled src={`/drawings/${selected.image}`} />
