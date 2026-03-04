@@ -1,1 +1,0 @@
-# timwork-drawing-explorer-jeeinkim
