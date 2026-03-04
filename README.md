@@ -2,6 +2,9 @@
 
 도면 탐색 및 컨텍스트 확인 사이트
 
+![Screen+Recording+2026-03-04+at+10 30 45 PM](https://github.com/user-attachments/assets/13fe1c7a-086e-444d-9c6d-95b11d9a08aa)
+
+
 ## 실행 방법
 
 ```bash
