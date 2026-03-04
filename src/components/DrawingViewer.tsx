@@ -2,14 +2,17 @@ import type { DrawingContext } from '../types/drawing';
 import Modal from './Modal';
 import styled from 'styled-components';
 import { Badge } from './ui/badge';
+import VersionList from './VersionList';
 
 const DrawingViewer = ({
   selected,
   latest,
+  related,
   onClose,
 }: {
   selected: DrawingContext;
   latest: boolean;
+  related: DrawingContext[];
   onClose: () => void;
 }) => {
   return (
@@ -44,6 +47,9 @@ const DrawingViewer = ({
             </>
           ) : null}
         </ContextGroupStyled>
+        {related.length > 1 ? (
+          <VersionList related={related} selectedId={selected.id} />
+        ) : null}
         <ImgWrapperStyled>
           <ImgStyled src={`/drawings/${selected.image}`} />
         </ImgWrapperStyled>

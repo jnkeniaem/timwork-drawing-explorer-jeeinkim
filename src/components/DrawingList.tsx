@@ -13,6 +13,15 @@ const DrawingList = () => {
   const drawings: Drawing[] = Object.values(metadata.drawings);
   const revisionItems = getAllRevisions(drawings);
   const latestRevisionIds = getLatestRevisionIds(revisionItems);
+  const selectedGroup =
+    selected == null
+      ? []
+      : revisionItems.filter(
+          (item) =>
+            item.drawingName === selected.drawingName &&
+            item.disciplineName === selected.disciplineName &&
+            item.regionName === selected.regionName,
+        );
 
   return (
     <WrapperStyled>
@@ -28,6 +37,7 @@ const DrawingList = () => {
         <DrawingViewer
           selected={selected}
           latest={latestRevisionIds.has(selected.id)}
+          related={selectedGroup}
           onClose={() => setSelected(null)}
         />
       ) : null}
